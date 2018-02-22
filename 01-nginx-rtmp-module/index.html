@@ -4,10 +4,19 @@
     <title>HLS Test Player </title>
 </head>
 <body>
-    <video id="example_video_1" class="video-js vjs-default-skin" controls autoplay
-                width="640" height="360" data-setup="{}">
-        <source src="/hls/test.m3u8" type="application/x-mpegURL" />
-    </video>
+<script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+<video id="video"></video>
+<script>
+  if(Hls.isSupported()) {
+    var video = document.getElementById('video');
+    var hls = new Hls();
+    hls.loadSource('/hls/test.m3u8');
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+ }
+</script>
 </body>
 </html>
 

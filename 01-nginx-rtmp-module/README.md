@@ -39,7 +39,9 @@ rtmp {
       hls on;
 
       hls_path /usr/share/nginx/html/hls;
+      hls_playlist_length 6s;
       hls_fragment 1s;
+      hls_max_fragment 1s;
       hls_type live;
     }
   }
@@ -59,31 +61,13 @@ rtmp {
 ## 視聴者側
 * Safari
 
-  簡易プレイヤーを配信する
-  
-  ```
-  <!DOCTYPE html>
-  <html>
-  <head>
-      <title>HLS Test Player </title>
-  </head>
-  <body>
-      <video id="example_video_1" class="video-js vjs-default-skin" controls autoplay
-                  width="640" height="360" data-setup="{}">
-          <source src="/hls/test.m3u8" type="application/x-mpegURL" />
-      </video>
-  </body>
-  </html>
-  ```
-  Safari から `http://{ip}:8080/` へアクセスする.
+  簡易プレイヤーを配信しているので, ブラウザから  `http://{ip}:8080/` へアクセスする.
 
 
 ## 結果
 
 一先ずここまで
 
-* OBS 側
-![OBS](img_obs.png)
+* 遅延
+![OBS](img_res.png)
 
-* Safari
-![Safari](img_safari.png)
