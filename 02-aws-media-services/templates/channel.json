@@ -1,0 +1,196 @@
+{
+    "Name": "channel", 
+    "RoleArn": "{{ ROLE_ARN }}",
+    "InputSpecification": {
+        "Codec": "AVC", 
+        "Resolution": "HD", 
+        "MaximumBitrate": "MAX_20_MBPS"
+    },
+    "InputAttachments": [
+        {
+            "InputId": "{{ INPUT_ID }}", 
+            "InputSettings": {
+                "AudioSelectors": [], 
+                "CaptionSelectors": [
+                    {
+                        "SelectorSettings": {
+                            "EmbeddedSourceSettings": {
+                                "Scte20Detection": "OFF", 
+                                "Source608ChannelNumber": 1, 
+                                "Convert608To708": "DISABLED", 
+                                "Source608TrackNumber": 1
+                            }
+                        }, 
+                        "Name": "EmbeddedSelector"
+                    }
+                ], 
+                "SourceEndBehavior": "CONTINUE", 
+                "InputFilter": "AUTO", 
+                "FilterStrength": 1, 
+                "NetworkInputSettings": {
+                    "ServerValidation": "CHECK_CRYPTOGRAPHY_AND_VALIDATE_NAME"
+                }, 
+                "DenoiseFilter": "DISABLED", 
+                "DeblockFilter": "DISABLED"
+            }
+        }
+    ], 
+    "Destinations": [
+        {
+            "Id": "destination1", 
+            "Settings": [
+                {
+                    "Url": "{{ DST_1_URL }}", 
+                    "Username": "{{ DST_1_USER }}", 
+                    "PasswordParam": "{{ DST_1_PASS }}"
+                }, 
+                {
+                    "Url": "{{ DST_2_URL }}", 
+                    "Username": "{{ DST_2_USER }}", 
+                    "PasswordParam": "{{ DST_2_PASS }}"
+                }
+            ]
+        }
+    ], 
+    "EncoderSettings": {
+        "TimecodeConfig": {
+            "Source": "SYSTEMCLOCK"
+        }, 
+        "OutputGroups": [
+            {
+                "OutputGroupSettings": {
+                    "HlsGroupSettings": {
+                        "TimedMetadataId3Frame": "PRIV", 
+                        "CaptionLanguageMappings": [], 
+                        "Destination": {
+                            "DestinationRefId": "destination1"
+                        }, 
+                        "IvSource": "FOLLOWS_SEGMENT_NUMBER", 
+                        "IndexNSegments": 10, 
+                        "InputLossAction": "EMIT_OUTPUT", 
+                        "ManifestDurationFormat": "FLOATING_POINT", 
+                        "CodecSpecification": "RFC_4281", 
+                        "IvInManifest": "INCLUDE", 
+                        "TimedMetadataId3Period": 10, 
+                        "ProgramDateTimePeriod": 600, 
+                        "SegmentLength": 6, 
+                        "CaptionLanguageSetting": "OMIT", 
+                        "ProgramDateTime": "INCLUDE", 
+                        "HlsCdnSettings": {
+                            "HlsBasicPutSettings": {
+                                "ConnectionRetryInterval": 30, 
+                                "NumRetries": 5, 
+                                "FilecacheDuration": 300, 
+                                "RestartDelay": 5
+                            }
+                        }, 
+                        "TsFileMode": "SEGMENTED_FILES", 
+                        "StreamInfResolution": "INCLUDE", 
+                        "ClientCache": "ENABLED", 
+                        "AdMarkers": [], 
+                        "KeepSegments": 21, 
+                        "SegmentationMode": "USE_SEGMENT_DURATION", 
+                        "SegmentsPerSubdirectory": 10000, 
+                        "OutputSelection": "MANIFESTS_AND_SEGMENTS", 
+                        "ManifestCompression": "NONE", 
+                        "DirectoryStructure": "SINGLE_DIRECTORY", 
+                        "Mode": "LIVE"
+                    }
+                }, 
+                "Outputs": [
+                    {
+                        "VideoDescriptionName": "video_640_360", 
+                        "AudioDescriptionNames": [
+                            "audio_3_aac64"
+                        ], 
+                        "CaptionDescriptionNames": [], 
+                        "OutputSettings": {
+                            "HlsOutputSettings": {
+                                "NameModifier": "_640x360_800k", 
+                                "HlsSettings": {
+                                    "StandardHlsSettings": {
+                                        "M3u8Settings": {
+                                            "PcrControl": "PCR_EVERY_PES_PACKET", 
+                                            "TimedMetadataBehavior": "NO_PASSTHROUGH", 
+                                            "PmtPid": "480", 
+                                            "Scte35Pid": "500", 
+                                            "VideoPid": "481", 
+                                            "ProgramNum": 1, 
+                                            "AudioPids": "492-498", 
+                                            "AudioFramesPerPes": 4, 
+                                            "EcmPid": "8182", 
+                                            "Scte35Behavior": "NO_PASSTHROUGH"
+                                        }, 
+                                        "AudioRenditionSets": "PROGRAM_AUDIO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ], 
+                "Name": "TN2224"
+            }
+        ], 
+        "CaptionDescriptions": [], 
+        "VideoDescriptions": [
+            {
+                "CodecSettings": {
+                    "H264Settings": {
+                        "Syntax": "DEFAULT", 
+                        "FramerateNumerator": 30000, 
+                        "Profile": "MAIN", 
+                        "GopSize": 60, 
+                        "AfdSignaling": "NONE", 
+                        "FramerateControl": "SPECIFIED", 
+                        "ColorMetadata": "INSERT", 
+                        "FlickerAq": "ENABLED", 
+                        "LookAheadRateControl": "HIGH", 
+                        "FramerateDenominator": 1001, 
+                        "Bitrate": 800000, 
+                        "TimecodeInsertion": "DISABLED", 
+                        "NumRefFrames": 1, 
+                        "EntropyEncoding": "CABAC", 
+                        "GopSizeUnits": "FRAMES", 
+                        "Level": "H264_LEVEL_3", 
+                        "GopBReference": "ENABLED", 
+                        "AdaptiveQuantization": "HIGH", 
+                        "GopNumBFrames": 3, 
+                        "ScanType": "PROGRESSIVE", 
+                        "ParControl": "INITIALIZE_FROM_SOURCE", 
+                        "SpatialAq": "ENABLED", 
+                        "TemporalAq": "ENABLED", 
+                        "RateControlMode": "CBR", 
+                        "SceneChangeDetect": "ENABLED", 
+                        "GopClosedCadence": 1
+                    }
+                }, 
+                "Name": "video_640_360", 
+                "Sharpness": 50, 
+                "Height": 360, 
+                "Width": 640, 
+                "ScalingBehavior": "DEFAULT", 
+                "RespondToAfd": "NONE"
+            }
+        ], 
+        "AudioDescriptions": [
+            {
+                "CodecSettings": {
+                    "AacSettings": {
+                        "Profile": "LC", 
+                        "InputType": "NORMAL", 
+                        "RateControlMode": "CBR", 
+                        "Spec": "MPEG4", 
+                        "SampleRate": 48000, 
+                        "Bitrate": 64000, 
+                        "CodingMode": "CODING_MODE_2_0", 
+                        "RawFormat": "NONE"
+                    }
+                }, 
+                "Name": "audio_3_aac64", 
+                "LanguageCodeControl": "FOLLOW_INPUT", 
+                "AudioSelectorName": "default", 
+                "AudioTypeControl": "FOLLOW_INPUT"
+            }
+        ]
+    }
+}
